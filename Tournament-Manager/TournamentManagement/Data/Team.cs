@@ -12,9 +12,9 @@ namespace TournamentManagement.Data
         public string Name { get; }
         public string ShortName { get; }
 
-        public float WinRate { get; }
+        public double WinRate { get; }
 
-        protected Team(string name, string shortName, float winRate)
+        protected Team(string name, string shortName, double winRate)
         {
             Name = name;
             ShortName = shortName;

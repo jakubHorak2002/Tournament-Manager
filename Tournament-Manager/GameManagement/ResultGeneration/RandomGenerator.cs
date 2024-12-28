@@ -8,9 +8,11 @@ namespace GameManagement.ResultGeneration
 {
     public static class RandomGenerator
     {
-        public static bool RandomBool(float trueChance) 
+        private static Random random = new Random();
+
+        public static bool RandomBool(double trueChance) 
         {
-            return true;
+            return random.NextDouble() < trueChance;
         }
     }
 }

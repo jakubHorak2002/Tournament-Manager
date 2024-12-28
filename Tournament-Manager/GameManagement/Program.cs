@@ -4,8 +4,14 @@ using GameManagement.ResultGeneration;
 using TournamentManagement.Data;
 using TournamentManagement.NHL;
 
-TeamNHL home = new TeamNHL("Dalas Stars", "Stars", 0.7f);
-TeamNHL away = new TeamNHL("Boston Bruins", "Bruins", 0.6f);
-Result r = new ResultNHL(home, away);
+TeamNHL home = new TeamNHL("Dalas Stars", "Stars", 0.9);
+TeamNHL away = new TeamNHL("Boston Bruins", "Bruins", 0.1);
 
-Console.WriteLine(r.HomeIsWinner);
+int counter = 0;
+for (int i = 0; i < 10000; i++)
+{
+    if ((bool)(new ResultNHL(home, away).HomeIsWinner)) counter++; 
+}
+
+Console.WriteLine(counter);
+

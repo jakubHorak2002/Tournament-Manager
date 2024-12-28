@@ -19,7 +19,7 @@ namespace GameManagement.NHL
 
         protected override bool? GenerateResult()
         {
-            bool homeWins = true;
+            bool homeWins = DetermineWinner();
 
             
 

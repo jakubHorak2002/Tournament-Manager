@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {}
+    "net8.0": {
+      "TournamentManagement/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/TournamentManagement.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TournamentManagement.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "TournamentManagement/1.0.0": {
+      "type": "project",
+      "path": "../TournamentManagement/TournamentManagement.csproj",
+      "msbuildProject": "../TournamentManagement/TournamentManagement.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0": []
+    "net8.0": [
+      "TournamentManagement >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\jjhor\\.nuget\\packages\\": {},
@@ -38,7 +57,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\TournamentManagement.csproj": {
+              "projectPath": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\TournamentManagement.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

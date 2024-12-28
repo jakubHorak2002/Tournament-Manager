@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "GameManagement/1.0.0": {
+        "dependencies": {
+          "TournamentManagement": "1.0.0"
+        },
+        "runtime": {
+          "GameManagement.dll": {}
+        }
+      },
+      "TournamentManagement/1.0.0": {
+        "runtime": {
+          "TournamentManagement.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GameManagement/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TournamentManagement/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

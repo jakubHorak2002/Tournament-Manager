@@ -3,12 +3,48 @@
   "WorkspaceRootPath": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\tournamentmanagement\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|solutionrelative:tournamentmanagement\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{435E8364-7E3A-432A-B89A-4B201632470B}|GameManagement\\GameManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\gamemanagement\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{435E8364-7E3A-432A-B89A-4B201632470B}|GameManagement\\GameManagement.csproj|solutionrelative:gamemanagement\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{435E8364-7E3A-432A-B89A-4B201632470B}|GameManagement\\GameManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\gamemanagement\\nhl\\resultnhl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{435E8364-7E3A-432A-B89A-4B201632470B}|GameManagement\\GameManagement.csproj|solutionrelative:gamemanagement\\nhl\\resultnhl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\tournamentmanagement\\nhl\\teamnhl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|solutionrelative:tournamentmanagement\\nhl\\teamnhl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\tournamentmanagement\\data\\team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|solutionrelative:tournamentmanagement\\data\\team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{435E8364-7E3A-432A-B89A-4B201632470B}|GameManagement\\GameManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\gamemanagement\\resultgeneration\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{435E8364-7E3A-432A-B89A-4B201632470B}|GameManagement\\GameManagement.csproj|solutionrelative:gamemanagement\\resultgeneration\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{435E8364-7E3A-432A-B89A-4B201632470B}|GameManagement\\GameManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\gamemanagement\\resultgeneration\\randomgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{435E8364-7E3A-432A-B89A-4B201632470B}|GameManagement\\GameManagement.csproj|solutionrelative:gamemanagement\\resultgeneration\\randomgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\tournamentmanagement\\data\\matchup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|solutionrelative:tournamentmanagement\\data\\matchup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\tournamentmanagement\\data\\playoffs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|solutionrelative:tournamentmanagement\\data\\playoffs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\tournamentmanagement\\data\\season.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|solutionrelative:tournamentmanagement\\data\\season.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\tournamentmanagement\\data\\table.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|solutionrelative:tournamentmanagement\\data\\table.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\tournamentmanagement\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF0B42D8-F5D2-4B19-B6BF-3E9D851F488D}|TournamentManagement\\TournamentManagement.csproj|solutionrelative:tournamentmanagement\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2C4B7E09-A51E-4887-9F8E-34509A85FCCE}|DataManagement\\DataManagement.csproj|c:\\users\\jjhor\\onedrive\\desktop\\tournament-manager\\tournament-manager\\datamanagement\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,37 +62,153 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Program.cs",
-              "RelativeDocumentMoniker": "TournamentManagement\\Program.cs",
-              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Program.cs",
-              "RelativeToolTip": "TournamentManagement\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 5,
+              "Title": "RandomGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\GameManagement\\ResultGeneration\\RandomGenerator.cs",
+              "RelativeDocumentMoniker": "GameManagement\\ResultGeneration\\RandomGenerator.cs",
+              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\GameManagement\\ResultGeneration\\RandomGenerator.cs*",
+              "RelativeToolTip": "GameManagement\\ResultGeneration\\RandomGenerator.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-27T16:59:50.767Z",
+              "WhenOpened": "2024-12-28T20:45:09.087Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PlayOffs.cs",
+              "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Data\\PlayOffs.cs",
+              "RelativeDocumentMoniker": "TournamentManagement\\Data\\PlayOffs.cs",
+              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Data\\PlayOffs.cs*",
+              "RelativeToolTip": "TournamentManagement\\Data\\PlayOffs.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-28T18:59:32.497Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Season.cs",
+              "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Data\\Season.cs",
+              "RelativeDocumentMoniker": "TournamentManagement\\Data\\Season.cs",
+              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Data\\Season.cs*",
+              "RelativeToolTip": "TournamentManagement\\Data\\Season.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-28T18:59:26.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Result.cs",
+              "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\GameManagement\\ResultGeneration\\Result.cs",
+              "RelativeDocumentMoniker": "GameManagement\\ResultGeneration\\Result.cs",
+              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\GameManagement\\ResultGeneration\\Result.cs*",
+              "RelativeToolTip": "GameManagement\\ResultGeneration\\Result.cs*",
+              "ViewState": "AQIAACwAAAAAAAAAAADwvzkAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-28T18:57:36.859Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "ResultNHL.cs",
+              "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\GameManagement\\NHL\\ResultNHL.cs",
+              "RelativeDocumentMoniker": "GameManagement\\NHL\\ResultNHL.cs",
+              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\GameManagement\\NHL\\ResultNHL.cs*",
+              "RelativeToolTip": "GameManagement\\NHL\\ResultNHL.cs*",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAUwA4AAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-28T18:44:22.695Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Table.cs",
+              "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Data\\Table.cs",
+              "RelativeDocumentMoniker": "TournamentManagement\\Data\\Table.cs",
+              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Data\\Table.cs*",
+              "RelativeToolTip": "TournamentManagement\\Data\\Table.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-28T18:36:32.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Matchup.cs",
+              "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Data\\Matchup.cs",
+              "RelativeDocumentMoniker": "TournamentManagement\\Data\\Matchup.cs",
+              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Data\\Matchup.cs*",
+              "RelativeToolTip": "TournamentManagement\\Data\\Matchup.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-28T18:33:55.964Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TeamNHL.cs",
+              "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\NHL\\TeamNHL.cs",
+              "RelativeDocumentMoniker": "TournamentManagement\\NHL\\TeamNHL.cs",
+              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\NHL\\TeamNHL.cs*",
+              "RelativeToolTip": "TournamentManagement\\NHL\\TeamNHL.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-28T18:30:41.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Team.cs",
+              "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Data\\Team.cs",
+              "RelativeDocumentMoniker": "TournamentManagement\\Data\\Team.cs",
+              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Data\\Team.cs*",
+              "RelativeToolTip": "TournamentManagement\\Data\\Team.cs*",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABQAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-28T18:26:15.677Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Program.cs",
+              "RelativeDocumentMoniker": "TournamentManagement\\Program.cs",
+              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\TournamentManagement\\Program.cs",
+              "RelativeToolTip": "TournamentManagement\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-27T16:59:50.767Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\GameManagement\\Program.cs",
               "RelativeDocumentMoniker": "GameManagement\\Program.cs",
-              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\GameManagement\\Program.cs",
-              "RelativeToolTip": "GameManagement\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ToolTip": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\GameManagement\\Program.cs*",
+              "RelativeToolTip": "GameManagement\\Program.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-27T16:58:40.042Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 11,
               "Title": "Class1.cs",
               "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\DataManagement\\Class1.cs",
               "RelativeDocumentMoniker": "DataManagement\\Class1.cs",
@@ -68,7 +220,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 12,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\jjhor\\OneDrive\\Desktop\\Tournament-Manager\\Tournament-Manager\\_Testing\\Program.cs",
               "RelativeDocumentMoniker": "_Testing\\Program.cs",

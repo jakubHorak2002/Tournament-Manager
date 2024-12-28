@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TournamentManagement.Data
 {
-    abstract class PlayOffs
+    internal abstract class PlayOffs
     {
     }
 }

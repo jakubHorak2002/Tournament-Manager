@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TournamentGeneration.NewFolder
+namespace TournamentManagement.Data
 {
-    abstract class Table
+    internal abstract class Table
     {
     }
 }

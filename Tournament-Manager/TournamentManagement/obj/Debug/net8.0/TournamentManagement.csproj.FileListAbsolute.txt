@@ -1,0 +1,15 @@
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\bin\Debug\net8.0\TournamentManagement.exe
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\bin\Debug\net8.0\TournamentManagement.deps.json
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\bin\Debug\net8.0\TournamentManagement.runtimeconfig.json
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\bin\Debug\net8.0\TournamentManagement.dll
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\bin\Debug\net8.0\TournamentManagement.pdb
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\obj\Debug\net8.0\TournamentManagement.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\obj\Debug\net8.0\TournamentManagement.AssemblyInfoInputs.cache
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\obj\Debug\net8.0\TournamentManagement.AssemblyInfo.cs
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\obj\Debug\net8.0\TournamentManagement.csproj.CoreCompileInputs.cache
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\obj\Debug\net8.0\TournamentManagement.sourcelink.json
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\obj\Debug\net8.0\TournamentManagement.dll
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\obj\Debug\net8.0\refint\TournamentManagement.dll
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\obj\Debug\net8.0\TournamentManagement.pdb
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\obj\Debug\net8.0\TournamentManagement.genruntimeconfig.cache
+C:\Users\jjhor\OneDrive\Desktop\Tournament-Manager\Tournament-Manager\TournamentManagement\obj\Debug\net8.0\ref\TournamentManagement.dll

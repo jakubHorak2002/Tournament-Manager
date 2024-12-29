@@ -17,6 +17,10 @@ namespace GameManagement.ResultGeneration
         public Team? Winner { get; private set; }
         public Team? Loser { get; private set; }
 
+        public int HomeScore { get; protected set; } = 0;
+        public int AwayScore { get; protected set; } = 0;
+
+
         public bool? HomeIsWinner { 
             get { return homeIsWinner; } 
             set
@@ -43,30 +47,72 @@ namespace GameManagement.ResultGeneration
             Home = home;
             Away = away;
 
-            HomeIsWinner = GenerateResult();
+            GenerateResult();
         }
 
         /// <summary>
-        /// 
+        /// Generates all the stats of this match.
         /// </summary>
-        /// <returns>Home team is a winner. Returns null if game is a draw.</returns>
         /// 
-        protected virtual bool? GenerateResult()
+        protected virtual void GenerateResult()
         {
-            bool home = DetermineWinner();
-
-            return home;
+            HomeIsWinner = DetermineWinner();
+            DetermineScore();
         }
 
         /// <summary>
-        /// 
+        /// Sets a winner or a draw.
         /// </summary>
         /// <returns>Home is winner.</returns>
-        protected bool DetermineWinner()
+        protected virtual bool? DetermineWinner()
         {
-            bool home = RandomGenerator.RandomBool(Home.WinRate / (Home.WinRate + Away.WinRate));
-            
+            bool? home = null;
+            if (!RandomGenerator.RandomBool((Home.DrawRate + Away.DrawRate) / 2))
+            {
+                home = RandomGenerator.RandomBool(Home.WinRate / (Home.WinRate + Away.WinRate));
+            }
+           
             return home;
+        }
+
+        /// <summary>
+        /// Sets both scores according to HomeIsWinner value.
+        /// </summary>
+        protected virtual void DetermineScore()
+        {
+            
+            if (!(HomeIsWinner is null))
+            {
+                do
+                {
+                    HomeScore = GetScoreFromAvarage(Home.AvarageScore);
+                    AwayScore = GetScoreFromAvarage(Away.AvarageScore);
+                }
+                while (HomeScore > AwayScore != HomeIsWinner || AwayScore > HomeScore == HomeIsWinner);
+            }
+            else
+            {
+                HomeScore = GetScoreFromAvarage((Home.AvarageScore + Away.AvarageScore) / 2);
+                AwayScore = HomeScore;
+            }
+
+            
+        }
+
+        protected int GetScoreFromAvarage(double avarage)
+        {
+            int score = 0;
+
+            double L = Math.Exp(-avarage); // e^(-lambda)
+            double p = 1;
+
+            do
+            {
+                score++;
+                p *= RandomGenerator.RandomDouble(); // Multiply by a new random number
+            } while (p > L);
+
+            return score - 1; // Subtract 1 because k starts at 1
         }
     }
 }

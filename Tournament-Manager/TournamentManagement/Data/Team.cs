@@ -13,12 +13,18 @@ namespace TournamentManagement.Data
         public string ShortName { get; }
 
         public double WinRate { get; }
+        public double DrawRate { get; }
+        public double AvarageScore { get; }
 
-        protected Team(string name, string shortName, double winRate)
+        protected Team(string name, string shortName, double winRate, double drawRate, double avarageScore)
         {
             Name = name;
             ShortName = shortName;
             WinRate = winRate;
+            DrawRate = drawRate;
+            AvarageScore = avarageScore;
         }
+
+       
     }
 }

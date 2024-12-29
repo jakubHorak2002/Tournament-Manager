@@ -9,21 +9,21 @@ using TournamentManagement.NHL;
 
 namespace GameManagement.NHL
 {
-    public class ResultNHL : Result
+    public abstract class ResultNHL : Result
     {
+        public ResultPeriod Period1 { get; protected set; }
+        public ResultPeriod Period2 { get; protected set; }
+        public ResultPeriod Period3 { get; protected set; }
+
+        
+
 
         public ResultNHL(TeamNHL home, TeamNHL away) : base(home, away) 
         {
             
         }
 
-        protected override bool? GenerateResult()
-        {
-            bool homeWins = DetermineWinner();
+       
 
-            
-
-            return homeWins;
-        }
     }
 }

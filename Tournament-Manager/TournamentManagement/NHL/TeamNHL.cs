@@ -9,8 +9,12 @@ namespace TournamentManagement.NHL
 {
     public class TeamNHL : Team
     {
-        public TeamNHL(string name, string shortName, double winRate, double drawRate, double avarageScore) : 
-            base(name, shortName, winRate, drawRate, avarageScore)
+        public double OtWinRate { get; }
+        public double ShootoutWinRate { get; }
+
+        //TODO: fix Team constructor
+        public TeamNHL(string name, string shortName, string abbreviation, double winRate, double drawRate, double avarageScore) :
+            base(name, shortName, abbreviation, winRate, drawRate, avarageScore)
         {
                 
         }

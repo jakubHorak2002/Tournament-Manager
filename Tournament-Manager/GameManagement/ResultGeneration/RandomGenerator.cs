@@ -24,5 +24,10 @@ namespace GameManagement.ResultGeneration
         {
             return random.NextDouble();
         }
+
+        public static int RandomInInterval(int nom, int den)
+        {
+            return random.Next(nom, den);
+        }
     }
 }

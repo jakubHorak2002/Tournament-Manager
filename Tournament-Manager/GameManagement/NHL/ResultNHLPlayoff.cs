@@ -12,5 +12,11 @@ namespace GameManagement.NHL
         public ResultNHLPlayoff(TeamNHL home, TeamNHL away) : base(home, away)
         {
         }
+
+
+        protected override void GenerateOvertime()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

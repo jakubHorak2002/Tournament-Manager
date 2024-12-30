@@ -8,9 +8,18 @@ namespace GameManagement.NHL
 {
     public class ResultPeriod
     {
-        public int HomeScore { get; protected set; } = 0;
-        public int AwayScore { get; protected set; } = 0;
+        public int HomeScore { get; } 
+        public int AwayScore { get; }
+        public int Minutes { get; protected set; } = 20;
+
 
         private List<string> report = new List<string>();
+
+        public ResultPeriod(int homeScore, int awayScore) 
+        { 
+            HomeScore = homeScore;
+            AwayScore = awayScore;
+        }
+
     }
 }

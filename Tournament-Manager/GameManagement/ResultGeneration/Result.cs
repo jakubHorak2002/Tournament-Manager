@@ -10,12 +10,12 @@ namespace GameManagement.ResultGeneration
     /// <summary>
     /// Holds all the result data.
     /// </summary>
-    public abstract class Result
+    public abstract class Result<T> where T : Team
     {
-        protected Team Home { get; }
-        protected Team Away { get; }
-        public Team? Winner { get; private set; }
-        public Team? Loser { get; private set; }
+        protected T Home { get; }
+        protected T Away { get; }
+        public T? Winner { get; private set; }
+        public T? Loser { get; private set; }
 
         public int HomeScore { get; protected set; } = 0;
         public int AwayScore { get; protected set; } = 0;
@@ -42,7 +42,7 @@ namespace GameManagement.ResultGeneration
         private bool? homeIsWinner;
 
 
-        protected Result(Team home, Team away)
+        protected Result(T home, T away)
         {
             Home = home;
             Away = away;

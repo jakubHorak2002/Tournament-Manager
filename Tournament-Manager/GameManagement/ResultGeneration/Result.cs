@@ -85,34 +85,20 @@ namespace GameManagement.ResultGeneration
             {
                 do
                 {
-                    HomeScore = GetScoreFromAvarage(Home.AvarageScore);
-                    AwayScore = GetScoreFromAvarage(Away.AvarageScore);
+                    HomeScore = RandomGenerator.GetRandomFromAvarage(Home.AvgScore);
+                    AwayScore = RandomGenerator.GetRandomFromAvarage(Away.AvgScore);
                 }
                 while (HomeScore > AwayScore != HomeIsWinner || AwayScore > HomeScore == HomeIsWinner);
             }
             else
             {
-                HomeScore = GetScoreFromAvarage((Home.AvarageScore + Away.AvarageScore) / 2);
+                HomeScore = RandomGenerator.GetRandomFromAvarage((Home.AvgScore + Away.AvgScore) / 2);
                 AwayScore = HomeScore;
             }
 
             
         }
 
-        protected int GetScoreFromAvarage(double avarage)
-        {
-            int score = 0;
-
-            double L = Math.Exp(-avarage); // e^(-lambda)
-            double p = 1;
-
-            do
-            {
-                score++;
-                p *= RandomGenerator.RandomDouble(); // Multiply by a new random number
-            } while (p > L);
-
-            return score - 1; // Subtract 1 because k starts at 1
-        }
+        
     }
 }

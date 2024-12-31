@@ -16,6 +16,14 @@ namespace GameManagement.NHL
             Min = min;
             Sec = sec;
         }
+
+        public static bool FirstEventEarlier(GameEvent e1, GameEvent e2)
+        {
+            if (e1.Min < e2.Min) return true;
+            else if (e1.Min == e2.Min && e1.Sec < e2.Sec) return true;
+            return false;
+
+        }
     }
 
     public class Goal : GameEvent 

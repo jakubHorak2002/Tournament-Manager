@@ -14,30 +14,29 @@ namespace GameManagement.NHL
         public ResultPeriod Period1 { get; }
         public ResultPeriod Period2 { get; }
         public ResultPeriod Period3 { get; }
-
+        public int HomePowerplays { get; protected set; } = 0;
+        public int AwayPowerplays { get; protected set; } = 0;
+        public int HomeShots { get; protected set; } = 0;
+        public int AwayShots { get; protected set; } = 0;
 
 
 
         public ResultNHL(TeamNHL home, TeamNHL away) : base(home, away)
         {
-            int[] homeGoals = { 0, 0, 0 };
-            int[] awayGoals = { 0, 0, 0 };
-            //home goals assignment
-            for (int i = 0; i < HomeScore; i++) 
-            {
-                int a = RandomGenerator.RandomInInterval(0, 3);
-                homeGoals[a]++;
-            }
-            //away goals assignment
-            for (int i = 0; i < AwayScore; i++)
-            {
-                int a = RandomGenerator.RandomInInterval(0, 3);
-                awayGoals[a]++;
-            }
+            DetermineShots();
+            DeterminePowerplay();
+            //TODO:generate faceoffs
 
-            Period1 = new ResultPeriod(homeGoals[0], awayGoals[0], 0, 0);
-            Period2 = new ResultPeriod(homeGoals[1], awayGoals[1], 0, 0);
-            Period3 = new ResultPeriod(homeGoals[2], awayGoals[2], 0, 0);
+            //goals
+            (int[] homeGoals, int[] awayGoals) = AssignToPeriod(HomeScore, AwayScore);
+            //shots
+            (int[] homeShots, int[] awayShots) = AssignToPeriod(HomeShots, AwayShots);
+            //powerplay
+            (int[] homePowerplays, int[] awayPowerplays) = AssignToPeriod(HomePowerplays, AwayPowerplays);
+
+            Period1 = new ResultPeriod(homeGoals[0], awayGoals[0], homeShots[0], awayShots[0], homePowerplays[0], awayPowerplays[0]);
+            Period2 = new ResultPeriod(homeGoals[1], awayGoals[1], homeShots[1], awayShots[1], homePowerplays[1], awayPowerplays[1]);
+            Period3 = new ResultPeriod(homeGoals[2], awayGoals[2], homeShots[2], awayShots[2], homePowerplays[2], awayPowerplays[2]);
 
             if (HomeScore == AwayScore) 
             {
@@ -46,5 +45,40 @@ namespace GameManagement.NHL
         }
 
         abstract protected void GenerateOvertime();
+
+        protected virtual void DeterminePowerplay()
+        {
+            //TODO: modify powerplay generation
+            //powerplay
+            RandomGenerator.GetRandomFromAvarage(Home.AvgPowerplay); 
+            RandomGenerator.GetRandomFromAvarage(Away.AvgPowerplay);
+        }
+
+        protected virtual void DetermineShots()
+        {
+            //shots
+            HomeShots = RandomGenerator.GetRandomFromAvarage(Home.AvgShots);
+            AwayShots = RandomGenerator.GetRandomFromAvarage(Away.AvgShots);
+        }
+
+        protected (int[], int[]) AssignToPeriod(int homeAmount, int awayAmount)
+        {
+            int[] home = { 0, 0, 0 };
+            int[] away = { 0, 0, 0 };
+            //home assignment
+            for (int i = 0; i < homeAmount; i++)
+            {
+                int a = RandomGenerator.RandomInInterval(0, 3);
+                home[a]++;
+            }
+            //away assignment
+            for (int i = 0; i < awayAmount; i++)
+            {
+                int a = RandomGenerator.RandomInInterval(0, 3);
+                away[a]++;
+            }
+
+            return (home, away);
+        }
     }
 }

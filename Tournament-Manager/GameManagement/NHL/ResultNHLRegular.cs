@@ -24,14 +24,17 @@ namespace GameManagement.NHL
         {
         }
 
+        //TODO: generate overtime
         protected override void GenerateOvertime()
         {
             if (RandomGenerator.RandomBool(1))
             {
                 if (RandomGenerator.RandomBool(Home.OtWinRate / (Home.OtWinRate + Away.OtWinRate))) 
-                    ResultOvertime = new ResultOvertime(1, 0, ResultOvertime.OtType.regular);
-                else ResultOvertime = new ResultOvertime(0, 1, ResultOvertime.OtType.regular);
+                    ResultOvertime = new ResultOvertime(1, 0, 0, 0, 0, 0, ResultOvertime.OtType.regular);
+                else ResultOvertime = new ResultOvertime(0, 1, 0, 0, 0, 0, ResultOvertime.OtType.regular);
             }
         }
+
+         
     }
 }

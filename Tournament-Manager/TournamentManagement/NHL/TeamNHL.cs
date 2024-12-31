@@ -11,17 +11,21 @@ namespace TournamentManagement.NHL
     {
         public double OtWinRate { get; }
         public double SoWinRate { get; }
+        public double AvgPowerplay { get; }
+        public double AvgShots { get; }
 
         //TODO: fix Team constructor
         public TeamNHL(
-            string name, string shortName, string abbreviation, double winRate, double drawRate, double avarageScore, 
-            double otWinRate, double soWinRate
+            string name, string shortName, string abbreviation, double winRate, double drawRate, double avgScore, 
+            double otWinRate, double soWinRate, double avgPowerplay, double avgShots
             ) : base(
-                name, shortName, abbreviation, winRate, drawRate, avarageScore
+                name, shortName, abbreviation, winRate, drawRate, avgScore
                 )
         {
             OtWinRate = otWinRate;
             SoWinRate = SoWinRate;
+            AvgPowerplay = avgPowerplay;
+            AvgShots = avgShots;
         }
     }
 }

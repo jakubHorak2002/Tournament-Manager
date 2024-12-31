@@ -15,7 +15,7 @@ namespace TournamentManagement.Data
 
         public double WinRate { get; }
         public double DrawRate { get; }
-        public double AvarageScore { get; }
+        public double AvgScore { get; }
 
         protected Team(string name, string shortName, string abbreviation, double winRate, double drawRate, double avarageScore)
         {
@@ -23,7 +23,7 @@ namespace TournamentManagement.Data
             ShortName = shortName;
             WinRate = winRate;
             DrawRate = drawRate;
-            AvarageScore = avarageScore;
+            AvgScore = avarageScore;
         }
 
        

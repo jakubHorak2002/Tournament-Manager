@@ -29,5 +29,21 @@ namespace GameManagement.ResultGeneration
         {
             return random.Next(nom, den);
         }
+
+        public static int GetRandomFromAvarage(double avarage)
+        {
+            int score = 0;
+
+            double L = Math.Exp(-avarage); // e^(-lambda)
+            double p = 1;
+
+            do
+            {
+                score++;
+                p *= RandomGenerator.RandomDouble(); // Multiply by a new random number
+            } while (p > L);
+
+            return score - 1; // Subtract 1 because k starts at 1
+        }
     }
 }

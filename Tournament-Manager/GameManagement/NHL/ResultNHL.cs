@@ -35,9 +35,9 @@ namespace GameManagement.NHL
                 awayGoals[a]++;
             }
 
-            Period1 = new ResultPeriod(homeGoals[0], awayGoals[0]);
-            Period2 = new ResultPeriod(homeGoals[1], awayGoals[1]);
-            Period3 = new ResultPeriod(homeGoals[2], awayGoals[2]);
+            Period1 = new ResultPeriod(homeGoals[0], awayGoals[0], 0, 0);
+            Period2 = new ResultPeriod(homeGoals[1], awayGoals[1], 0, 0);
+            Period3 = new ResultPeriod(homeGoals[2], awayGoals[2], 0, 0);
 
             if (HomeScore == AwayScore) 
             {

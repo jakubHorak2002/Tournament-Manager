@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,6 +28,9 @@ namespace GameManagement.NHL
 
         private int eventBlocks;
 
+        protected bool[] homeBlock;
+        protected bool[] awayBlock;
+
 
         private List<GameEvent> report = new List<GameEvent>();
 
@@ -39,8 +43,10 @@ namespace GameManagement.NHL
             HomePowerplays = homePowerplays;
             AwayPowerplays = awayPowerplays;
             Minutes = 20;
+            homeBlock = new bool[60 * Minutes];
+            awayBlock = new bool[60 * Minutes];
 
-            GenerateReport();
+        GenerateReport();
         }
 
         protected virtual List<GameEvent> GenerateReport()
@@ -52,8 +58,7 @@ namespace GameManagement.NHL
             List<GameEvent> shotReport = new List<GameEvent>();
             List<GameEvent> powerplayReport = new List<GameEvent>();
 
-            bool[] homeBlock = new bool[60 * Minutes];
-            bool[] awayBlock = new bool[60 * Minutes];
+            
 
             //TODO: generate individual reports
             powerplayReport.AddRange(GeneratePowerplays());
@@ -88,13 +93,23 @@ namespace GameManagement.NHL
                 {
                     if (RandomGenerator.RandomBool(home / (home + away)))
                     {
-                        home--;
-                        list.Add(new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 10), true, true, false));
+                        var p = new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 10), true, true, false);
+                        if (!(homeBlock[GetTime(p.Min, p.Sec)]))
+                        {
+                            home--;
+                            list.Add(p);
+                            Block(true, true, i);
+                        }
                     }
                     else
                     {
-                        away--;
-                        list.Add(new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 10), true, true, false));
+                        var p = new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 10), true, true, false);
+                        if (!(awayBlock[GetTime(p.Min, p.Sec)]))
+                        {
+                            away--;
+                            list.Add(p);
+                            Block(true, true, i);
+                        }
                     }
                 }
                 if (home + away == 0) break;
@@ -111,6 +126,45 @@ namespace GameManagement.NHL
         {
             int blocksPerMin = eventBlocks / Minutes;
             return (Minutes - (block - 1) / blocksPerMin - 1, (blocksPerMin - (block % blocksPerMin)) * (60 / blocksPerMin));
+        }
+
+        /// <summary>
+        /// Gets one number equivalent of time.
+        /// </summary>
+        protected int GetTime(int min, int sec)
+        {
+            return min * 60 + sec;
+        }
+        protected (int, int) GetTime(int val)
+        {
+            return (val / 60, val % 60);
+        }
+
+        /// <summary>
+        /// Sets blocks for ivent on specified position.
+        /// </summary>
+        protected void Block(bool home, bool away, int pos, int blockSize = 5)
+        {
+            if (home)
+            {
+                for (int i = pos - blockSize; i < pos + blockSize + 1; i++) 
+                {
+                    if (i >= 0 && i < Minutes * 60)
+                    {
+                        homeBlock[i] = true;
+                    }
+                }
+            }
+            if (away)
+            {
+                for (int i = pos - blockSize; i < pos + blockSize + 1; i++)
+                {
+                    if (i >= 0 && i < Minutes * 60)
+                    {
+                        awayBlock[i] = true;
+                    }
+                }
+            }
         }
     }
     

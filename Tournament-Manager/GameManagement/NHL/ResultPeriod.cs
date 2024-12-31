@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameManagement.ResultGeneration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,17 @@ namespace GameManagement.NHL
         public int HomePowerplays { get; }
         public int AwayPowerplays { get; }
         public int AwayShots { get; }
-        public int Minutes { get; protected set; } = 20;
+        public int Minutes {
+            get => minutes;
+            protected set 
+            {
+                minutes = value;
+                eventBlocks = value * 6;
+            } 
+        }
+        private int minutes;
+
+        private int eventBlocks;
 
 
         private List<GameEvent> report = new List<GameEvent>();
@@ -27,6 +38,9 @@ namespace GameManagement.NHL
             AwayShots = awayShots;
             HomePowerplays = homePowerplays;
             AwayPowerplays = awayPowerplays;
+            Minutes = 20;
+
+            GenerateReport();
         }
 
         protected virtual List<GameEvent> GenerateReport()
@@ -42,8 +56,9 @@ namespace GameManagement.NHL
             bool[] awayBlock = new bool[60 * Minutes];
 
             //TODO: generate individual reports
+            powerplayReport.AddRange(GeneratePowerplays());
 
-            while (goalReport.Count > 0 && shotReport.Count > 0 && powerplayReport.Count > 0) 
+            while (goalReport.Count > 0 || shotReport.Count > 0 || powerplayReport.Count > 0) 
             {
                 List<GameEvent> min = goalReport;
                 if (GameEvent.FirstEventEarlier(shotReport[0], min[0]))
@@ -61,5 +76,42 @@ namespace GameManagement.NHL
             return report;
         }
 
+        protected virtual List<Powerplay> GeneratePowerplays()
+        {
+            var list = new List<Powerplay>();
+            double home = HomePowerplays;
+            double away = AwayPowerplays;
+
+            for (int i = eventBlocks; i > 0; i--)
+            {
+                if (RandomGenerator.RandomBool((home + away) / i))
+                {
+                    if (RandomGenerator.RandomBool(home / (home + away)))
+                    {
+                        home--;
+                        list.Add(new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 10), true, true, false));
+                    }
+                    else
+                    {
+                        away--;
+                        list.Add(new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 10), true, true, false));
+                    }
+                }
+                if (home + away == 0) break;
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Translates Event blocks to (minutes, seconds)
+        /// </summary>
+        /// <returns></returns>
+        protected (int, int) TranslateEventBlocks(int block)
+        {
+            int blocksPerMin = eventBlocks / Minutes;
+            return (Minutes - (block - 1) / blocksPerMin - 1, (blocksPerMin - (block % blocksPerMin)) * (60 / blocksPerMin));
+        }
     }
+    
 }

@@ -25,9 +25,9 @@ namespace GameManagement.ResultGeneration
             return random.NextDouble();
         }
 
-        public static int RandomInInterval(int nom, int den)
+        public static int RandomInInterval(int min, int max)
         {
-            return random.Next(nom, den);
+            return random.Next(min, max);
         }
 
         public static int GetRandomFromAvarage(double avarage)

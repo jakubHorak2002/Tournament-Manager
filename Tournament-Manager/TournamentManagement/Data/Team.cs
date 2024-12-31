@@ -24,6 +24,7 @@ namespace TournamentManagement.Data
             WinRate = winRate;
             DrawRate = drawRate;
             AvgScore = avarageScore;
+            Abbreviation = abbreviation;
         }
 
        

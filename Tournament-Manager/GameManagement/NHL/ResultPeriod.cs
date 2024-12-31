@@ -24,6 +24,9 @@ namespace GameManagement.NHL
                 eventBlocks = value * 6;
             } 
         }
+        public ResultPeriod? PrevPeriod { get; }
+
+
         private int minutes;
 
         private int eventBlocks;
@@ -31,10 +34,12 @@ namespace GameManagement.NHL
         protected bool[] homeBlock;
         protected bool[] awayBlock;
 
+        public List<GameEvent> InheritedEvents { get; } = new List<GameEvent>();
+
 
         private List<GameEvent> report = new List<GameEvent>();
 
-        public ResultPeriod(int homeScore, int awayScore, int homeShots, int awayShots, int homePowerplays, int awayPowerplays) 
+        public ResultPeriod(int homeScore, int awayScore, int homeShots, int awayShots, int homePowerplays, int awayPowerplays, ResultPeriod? prevPeriod) 
         { 
             HomeScore = homeScore;
             AwayScore = awayScore;
@@ -45,6 +50,7 @@ namespace GameManagement.NHL
             Minutes = 20;
             homeBlock = new bool[60 * Minutes];
             awayBlock = new bool[60 * Minutes];
+            PrevPeriod = prevPeriod;
 
         GenerateReport();
         }
@@ -56,34 +62,54 @@ namespace GameManagement.NHL
 
             List<GameEvent> goalReport = new List<GameEvent>();
             List<GameEvent> shotReport = new List<GameEvent>();
-            List<GameEvent> powerplayReport = new List<GameEvent>();
+            List<GameEvent> powerplayStartReport = new List<GameEvent>();
+            List<GameEvent> powerplayEndReport = new List<GameEvent>();
 
-            
 
             //TODO: generate individual reports
-            powerplayReport.AddRange(GeneratePowerplays());
+            (var s, var e) = GeneratePowerplays();
+            powerplayStartReport.AddRange(s);
+            powerplayEndReport.AddRange(e);
 
-            while (goalReport.Count > 0 || shotReport.Count > 0 || powerplayReport.Count > 0) 
+            //separate inherited powerplays
+            var temp = new List<GameEvent>();
+            foreach (var item in powerplayEndReport)
             {
-                List<GameEvent> min = goalReport;
-                if (GameEvent.FirstEventEarlier(shotReport[0], min[0]))
+                if (item.Min < 20) temp.Add(item);
+                else InheritPowerplay((Powerplay)item);
+            }
+            powerplayEndReport = temp;
+
+            //merge all reports chronologicaly
+            var allReports = new List<List<GameEvent>>() 
+            { 
+                goalReport, shotReport, powerplayStartReport, powerplayEndReport
+            };
+            if (PrevPeriod != null) allReports.Add(PrevPeriod.InheritedEvents);
+
+            while (true)
+            {
+                List<GameEvent>? min = null;
+                foreach (var item in allReports)
                 {
-                    min = shotReport;
+                    if (item.Count == 0) continue;
+                    if (min == null || GameEvent.FirstEventEarlier(item[0], min[0])) min = item;
                 }
-                if (GameEvent.FirstEventEarlier(powerplayReport[0], min[0]))
+                if (min != null)
                 {
-                    min = powerplayReport;
+                    report.Add(min[0]);
+                    min.RemoveAt(0);
                 }
-                report.Add(min[0]);
-                min.RemoveAt(0);
+                else break;
             }
 
             return report;
         }
 
-        protected virtual List<Powerplay> GeneratePowerplays()
+        protected virtual (List<Powerplay>, List<Powerplay>) GeneratePowerplays()
         {
-            var list = new List<Powerplay>();
+            var listStart = new List<Powerplay>();
+            var listEnd = new List<Powerplay>();
             double home = HomePowerplays;
             double away = AwayPowerplays;
 
@@ -93,21 +119,27 @@ namespace GameManagement.NHL
                 {
                     if (RandomGenerator.RandomBool(home / (home + away)))
                     {
-                        var p = new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 10), true, true, false);
+                        //2 min powerplay
+                        var p = new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 10), true, true);
+                        var pEnd = new Powerplay(p.Min + p.Length, p.Sec, false, true, p.Length);
                         if (!(homeBlock[GetTime(p.Min, p.Sec)]))
                         {
                             home--;
-                            list.Add(p);
+                            listStart.Add(p);
+                            listEnd.Add(pEnd);
                             Block(true, true, i);
                         }
                     }
                     else
                     {
-                        var p = new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 10), true, true, false);
+                        //2 min powerplay
+                        var p = new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 10), true, true);
+                        var pEnd = new Powerplay(p.Min + p.Length, p.Sec, false, true, p.Length);
                         if (!(awayBlock[GetTime(p.Min, p.Sec)]))
                         {
                             away--;
-                            list.Add(p);
+                            listStart.Add(p);
+                            listEnd.Add(pEnd);
                             Block(true, true, i);
                         }
                     }
@@ -115,7 +147,7 @@ namespace GameManagement.NHL
                 if (home + away == 0) break;
             }
 
-            return list;
+            return (listStart, listEnd);
         }
 
         /// <summary>
@@ -125,7 +157,7 @@ namespace GameManagement.NHL
         protected (int, int) TranslateEventBlocks(int block)
         {
             int blocksPerMin = eventBlocks / Minutes;
-            return (Minutes - (block - 1) / blocksPerMin - 1, (blocksPerMin - (block % blocksPerMin)) * (60 / blocksPerMin));
+            return (Minutes - (block - 1) / blocksPerMin - 1, (blocksPerMin - (block % blocksPerMin) - 1) * (60 / blocksPerMin));
         }
 
         /// <summary>
@@ -165,6 +197,11 @@ namespace GameManagement.NHL
                     }
                 }
             }
+        }
+
+        protected void InheritPowerplay(Powerplay p)
+        {
+            InheritedEvents.Add(new Powerplay(p.Min - Minutes, p.Sec, p.Start, p.Home, p.Length));
         }
     }
     

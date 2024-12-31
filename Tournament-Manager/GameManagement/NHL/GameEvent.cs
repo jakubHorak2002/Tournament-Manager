@@ -19,6 +19,8 @@ namespace GameManagement.NHL
 
         public static bool FirstEventEarlier(GameEvent e1, GameEvent e2)
         {
+            if (e1 == null) return false;
+            if (e2 == null) return true;
             if (e1.Min < e2.Min) return true;
             else if (e1.Min == e2.Min && e1.Sec < e2.Sec) return true;
             return false;
@@ -49,14 +51,13 @@ namespace GameManagement.NHL
     {
         public bool Start { get; }
         public bool Home { get; }
-        public bool PowerplayScore { get; }
-        public bool ShorthandScore { get; }
+        public int Length { get; }
 
-        public Powerplay(int min, int sec, bool start, bool home, bool powerplayScore) : base(min, sec)
+        public Powerplay(int min, int sec, bool start, bool home, int length = 2) : base(min, sec)
         {
             Start = start;
             Home = home;
-            PowerplayScore = powerplayScore;
+            Length = length;
         }
     }
 

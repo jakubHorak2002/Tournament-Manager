@@ -11,9 +11,10 @@ namespace GameManagement.NHL
         public bool GoalScored { get; } = false;
 
         public ResultOvertime(
-            int homeScore, int awayScore, int homeShots, int awayShots, int homePowerplays, int awayPowerplays, OtType type
+            int homeScore, int awayScore, int homeShots, int awayShots, int homePowerplays, int awayPowerplays, ResultPeriod prevPeriod,
+            OtType type
             ) : base(
-                homeScore, awayScore, homeShots, awayShots, homePowerplays, awayPowerplays
+                homeScore, awayScore, homeShots, awayShots, homePowerplays, awayPowerplays, prevPeriod
                 ) 
         {
             if (type == OtType.regular) Minutes = 5;

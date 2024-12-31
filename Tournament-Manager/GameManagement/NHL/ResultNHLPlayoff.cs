@@ -15,7 +15,7 @@ namespace GameManagement.NHL
 
       
 
-        protected override void GenerateOvertime()
+        protected override void GenerateOvertime(ResultPeriod period3)
         {
             throw new NotImplementedException();
         }

@@ -10,6 +10,7 @@ namespace GameManagement.NHL
 {
     public class ResultPeriod
     {
+        protected int blocksPerMin = 12;
         public int HomeScore { get; } 
         public int AwayScore { get; }
         public int HomeShots { get; }
@@ -21,7 +22,7 @@ namespace GameManagement.NHL
             protected set 
             {
                 minutes = value;
-                eventBlocks = value * 6;
+                eventBlocks = value * blocksPerMin;
             } 
         }
         public ResultPeriod? PrevPeriod { get; }
@@ -52,7 +53,7 @@ namespace GameManagement.NHL
             awayBlock = new bool[60 * Minutes];
             PrevPeriod = prevPeriod;
 
-        GenerateReport();
+            report = GenerateReport();
         }
 
         protected virtual List<GameEvent> GenerateReport()
@@ -65,7 +66,7 @@ namespace GameManagement.NHL
             List<GameEvent> powerplayStartReport = new List<GameEvent>();
             List<GameEvent> powerplayEndReport = new List<GameEvent>();
 
-
+            //POWER PLAY
             //TODO: generate individual reports
             (var s, var e) = GeneratePowerplays();
             powerplayStartReport.AddRange(s);
@@ -79,11 +80,16 @@ namespace GameManagement.NHL
                 else InheritPowerplay((Powerplay)item);
             }
             powerplayEndReport = temp;
+            //POWER PLAY
+
+            //SHOT
+            shotReport.AddRange(GenerateShots());
+            //SHOT
 
             //merge all reports chronologicaly
             var allReports = new List<List<GameEvent>>() 
             { 
-                goalReport, shotReport, powerplayStartReport, powerplayEndReport
+                shotReport, powerplayStartReport, powerplayEndReport
             };
             if (PrevPeriod != null) allReports.Add(PrevPeriod.InheritedEvents);
 
@@ -120,7 +126,7 @@ namespace GameManagement.NHL
                     if (RandomGenerator.RandomBool(home / (home + away)))
                     {
                         //2 min powerplay
-                        var p = new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 10), true, true);
+                        var p = new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 60 / blocksPerMin), true, true);
                         var pEnd = new Powerplay(p.Min + p.Length, p.Sec, false, true, p.Length);
                         if (!(homeBlock[GetTime(p.Min, p.Sec)]))
                         {
@@ -133,7 +139,7 @@ namespace GameManagement.NHL
                     else
                     {
                         //2 min powerplay
-                        var p = new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 10), true, true);
+                        var p = new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 60 / blocksPerMin), true, true);
                         var pEnd = new Powerplay(p.Min + p.Length, p.Sec, false, true, p.Length);
                         if (!(awayBlock[GetTime(p.Min, p.Sec)]))
                         {
@@ -148,6 +154,63 @@ namespace GameManagement.NHL
             }
 
             return (listStart, listEnd);
+        }
+
+        protected List<GameEvent> GenerateShots()
+        {
+            var list = new List<GameEvent>();
+
+            //TODO:effects of powerplay on shots
+            double hShots = HomeShots;
+            double aShots = AwayShots;
+            double hGoals = HomeScore;
+            double aGoals = AwayScore;
+            for (int i = eventBlocks; i > 0; i--)
+            {
+                if (RandomGenerator.RandomBool((hShots + aShots) / i))
+                {
+                    if (RandomGenerator.RandomBool(hShots / (hShots + aShots)))
+                    {
+                        //TODO:change shot on goal
+                        var s = new Shot(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 60 / blocksPerMin), true, false);
+                        if (!(homeBlock[GetTime(s.Min, s.Sec)]))
+                        {
+                            list.Add(s);
+                            Block(true, true, i);
+
+                            //GOAL
+                            if (RandomGenerator.RandomBool(hGoals / hShots))
+                            {
+                                hGoals--;
+                                list.Add(new Goal(s.Min, s.Sec, true));
+                            }
+
+                            hShots--;
+                        }
+                    }
+                    else
+                    {
+                        var s = new Shot(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 60 / blocksPerMin), false, false);
+                        if (!(awayBlock[GetTime(s.Min, s.Sec)]))
+                        {
+                            list.Add(s);
+                            Block(true, true, i);
+
+                            //GOAL
+                            if (RandomGenerator.RandomBool(aGoals / aShots))
+                            {
+                                aGoals--;
+                                list.Add(new Goal(s.Min, s.Sec, false));
+                            }
+
+                            aShots--;
+                            
+                        }
+                    }
+                }
+            }
+
+            return list;
         }
 
         /// <summary>
@@ -202,6 +265,16 @@ namespace GameManagement.NHL
         protected void InheritPowerplay(Powerplay p)
         {
             InheritedEvents.Add(new Powerplay(p.Min - Minutes, p.Sec, p.Start, p.Home, p.Length));
+        }
+
+        public override string ToString()
+        {
+            string s = "";
+            foreach (var gameEvent in report) 
+            {
+                s += gameEvent.ToString() + "\n";
+            }
+            return s;
         }
     }
     

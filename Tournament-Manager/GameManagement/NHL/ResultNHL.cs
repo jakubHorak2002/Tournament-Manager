@@ -35,8 +35,8 @@ namespace GameManagement.NHL
             (int[] homePowerplays, int[] awayPowerplays) = AssignToPeriod(HomePowerplays, AwayPowerplays);
 
             //TODO: change period1
-            //Period1 = new ResultPeriod(homeGoals[0], awayGoals[0], homeShots[0], awayShots[0], homePowerplays[0], awayPowerplays[0]);
-            Period1 = new ResultPeriod(homeGoals[0], awayGoals[0], homeShots[0], awayShots[0], 4, 4, null);
+            Period1 = new ResultPeriod(homeGoals[0], awayGoals[0], homeShots[0], awayShots[0], homePowerplays[0], awayPowerplays[0], null);
+            //Period1 = new ResultPeriod(homeGoals[0], awayGoals[0], homeShots[0], awayShots[0], 4, 4, null);
             Period2 = new ResultPeriod(homeGoals[1], awayGoals[1], homeShots[1], awayShots[1], homePowerplays[1], awayPowerplays[1], Period1);
             Period3 = new ResultPeriod(homeGoals[2], awayGoals[2], homeShots[2], awayShots[2], homePowerplays[2], awayPowerplays[2], Period2);
 
@@ -81,6 +81,11 @@ namespace GameManagement.NHL
             }
 
             return (home, away);
+        }
+
+        public override string ToString()
+        {
+            return $"Period1: \n{Period1.ToString()}\nPeriod2: \n{Period2.ToString()}\nPeriod3: \n{Period3.ToString()}\n";
         }
     }
 }

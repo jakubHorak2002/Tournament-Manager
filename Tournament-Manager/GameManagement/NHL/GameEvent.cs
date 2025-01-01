@@ -24,8 +24,9 @@ namespace GameManagement.NHL
             if (e1.Min < e2.Min) return true;
             else if (e1.Min == e2.Min && e1.Sec < e2.Sec) return true;
             return false;
-
         }
+
+        
     }
 
     public class Goal : GameEvent 
@@ -36,14 +37,28 @@ namespace GameManagement.NHL
         {
             Home = home;
         }
+
+        public override string ToString()
+        {
+            if (Home) return $"{Min} : {Sec} GOAL (home)";
+            return $"{Min} : {Sec} GOAL (away)";
+        }
     }
 
     public class Shot : GameEvent
     {
         public bool OnGoal { get; }
-        public Shot(int min, int sec, bool onGoal) : base(min, sec)
+        public bool Home { get; }
+        public Shot(int min, int sec, bool home, bool onGoal) : base(min, sec)
         {
             OnGoal = onGoal;
+            Home = home;
+        }
+
+        public override string ToString()
+        {
+            if (Home) return $"{Min} : {Sec} SHOT (home)";
+            return $"{Min} : {Sec} SHOT (away)";
         }
     }
 
@@ -58,6 +73,12 @@ namespace GameManagement.NHL
             Start = start;
             Home = home;
             Length = length;
+        }
+
+        public override string ToString()
+        {
+            if (Home) return $"{Min} : {Sec} POWERPLAY (home)";
+            return $"{Min} : {Sec} POWERPLAY (away)";
         }
     }
 

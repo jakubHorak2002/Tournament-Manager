@@ -26,7 +26,14 @@ namespace GameManagement.NHL
             return false;
         }
 
-        
+        public override string ToString()
+        {
+            var min = Min.ToString();
+            var sec = Sec.ToString();
+            if (Min < 10) min = "0" + Min.ToString();
+            if (Sec < 10) sec = "0" + Sec.ToString();
+            return $"{min} : {sec}";
+        }
     }
 
     public class Goal : GameEvent 
@@ -40,8 +47,8 @@ namespace GameManagement.NHL
 
         public override string ToString()
         {
-            if (Home) return $"{Min} : {Sec} GOAL (home)";
-            return $"{Min} : {Sec} GOAL (away)";
+            if (Home) return $"{base.ToString()}  GOAL (home)";
+            return $"{base.ToString()}  GOAL (away)";
         }
     }
 
@@ -57,8 +64,8 @@ namespace GameManagement.NHL
 
         public override string ToString()
         {
-            if (Home) return $"{Min} : {Sec} SHOT (home)";
-            return $"{Min} : {Sec} SHOT (away)";
+            if (Home) return $"{base.ToString()}  SHOT (home)";
+            return $"{base.ToString()}  SHOT (away)";
         }
     }
 
@@ -77,8 +84,11 @@ namespace GameManagement.NHL
 
         public override string ToString()
         {
-            if (Home) return $"{Min} : {Sec} POWERPLAY (home)";
-            return $"{Min} : {Sec} POWERPLAY (away)";
+            var team = "home";
+            var type = "START";
+            if (!Home) team = "away";
+            if (!Start) type = "END";
+            return $"{base.ToString()} POWERPLAY {type} ({team})";
         }
     }
 

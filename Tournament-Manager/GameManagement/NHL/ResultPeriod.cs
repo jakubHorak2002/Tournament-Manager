@@ -10,7 +10,7 @@ namespace GameManagement.NHL
 {
     public class ResultPeriod
     {
-        protected int blocksPerMin = 12;
+        protected int sectionsPerMin = 12;
         public int HomeScore { get; } 
         public int AwayScore { get; }
         public int HomeShots { get; }
@@ -22,7 +22,7 @@ namespace GameManagement.NHL
             protected set 
             {
                 minutes = value;
-                eventBlocks = value * blocksPerMin;
+                eventSection = value * sectionsPerMin;
             } 
         }
         public ResultPeriod? PrevPeriod { get; }
@@ -30,7 +30,7 @@ namespace GameManagement.NHL
 
         private int minutes;
 
-        private int eventBlocks;
+        private int eventSection;
 
         protected bool[] homeBlock;
         protected bool[] awayBlock;
@@ -61,36 +61,27 @@ namespace GameManagement.NHL
 
             List<GameEvent> report = new List<GameEvent>();
 
-            List<GameEvent> goalReport = new List<GameEvent>();
-            List<GameEvent> shotReport = new List<GameEvent>();
-            List<GameEvent> powerplayStartReport = new List<GameEvent>();
-            List<GameEvent> powerplayEndReport = new List<GameEvent>();
+            var goalReport = new List<GameEvent>();
+            var shotReport = new List<GameEvent>();
+            var powerplayReports = new List<List<GameEvent>>();
 
             //POWER PLAY
-            //TODO: generate individual reports
-            (var s, var e) = GeneratePowerplays();
-            powerplayStartReport.AddRange(s);
-            powerplayEndReport.AddRange(e);
+            powerplayReports = GeneratePowerplays();
 
-            //separate inherited powerplays
-            var temp = new List<GameEvent>();
-            foreach (var item in powerplayEndReport)
-            {
-                if (item.Min < 20) temp.Add(item);
-                else InheritPowerplay((Powerplay)item);
-            }
-            powerplayEndReport = temp;
+            //TODO: separate inherited powerplays
+
             //POWER PLAY
 
             //SHOT
-            shotReport.AddRange(GenerateShots());
+            shotReport.AddRange(GenerateShots(HomeShots, AwayShots, HomeScore, AwayScore, eventSection));
             //SHOT
 
             //merge all reports chronologicaly
             var allReports = new List<List<GameEvent>>() 
             { 
-                shotReport, powerplayStartReport, powerplayEndReport
+                shotReport
             };
+            allReports.AddRange(powerplayReports);
             if (PrevPeriod != null) allReports.Add(PrevPeriod.InheritedEvents);
 
             while (true)
@@ -112,71 +103,102 @@ namespace GameManagement.NHL
             return report;
         }
 
-        protected virtual (List<Powerplay>, List<Powerplay>) GeneratePowerplays()
+
+        /// <summary>
+        /// Generates full report for one powerplay.
+        /// </summary>
+        /// <param name="sectionOffset">Absolute section index.</param>
+        /// <param name="home"></param>
+        /// <param name="blockArray"></param>
+        /// <returns>Returns list or null if powerplay can't be generated.</returns>
+        protected virtual List<GameEvent>? GeneratePowerplayReport(int sectionOffset, bool home, bool[] blockArray, int hShots, int aShots)
         {
-            var listStart = new List<Powerplay>();
-            var listEnd = new List<Powerplay>();
+            var list = new List<GameEvent>();
+
+            var p = new Powerplay(
+                TranslateEventBlocks(sectionOffset).Item1,
+                TranslateEventBlocks(sectionOffset).Item2 + RandomGenerator.RandomInInterval(0, 60 / sectionsPerMin),
+                true, true);
+            var pEnd = new Powerplay(p.Min + p.Length, p.Sec, false, true, p.Length);
+            if (!(blockArray[GetTime(p.Min, p.Sec)]))
+            {
+                //generating report
+                list.Add(p);
+                Block(true, true, GetTime(p.Min, p.Sec));
+                list.AddRange(GenerateShots(hShots, aShots, 0, 0, p.Length * sectionsPerMin, sectionOffset - p.Length * sectionsPerMin));
+                list.Add(pEnd);
+                Block(true, true, GetTime(p.Min, p.Sec));
+
+                return list;
+            }
+
+            return null;
+        }
+
+
+        /// <summary>
+        /// Gets List of all powerplay reports in a period.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual List<List<GameEvent>> GeneratePowerplays()
+        {
+            var list = new List<List<GameEvent>>();
             double home = HomePowerplays;
             double away = AwayPowerplays;
 
-            for (int i = eventBlocks; i > 0; i--)
+            //TODO: remake shot count
+            for (int i = eventSection; i > 0; i--)
             {
                 if (RandomGenerator.RandomBool((home + away) / i))
                 {
                     if (RandomGenerator.RandomBool(home / (home + away)))
                     {
-                        //2 min powerplay
-                        var p = new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 60 / blocksPerMin), true, true);
-                        var pEnd = new Powerplay(p.Min + p.Length, p.Sec, false, true, p.Length);
-                        if (!(homeBlock[GetTime(p.Min, p.Sec)]))
+                        var l = GeneratePowerplayReport(i, true, homeBlock, 5, 5);
+                        if (l != null)
                         {
+                            list.Add(l);
                             home--;
-                            listStart.Add(p);
-                            listEnd.Add(pEnd);
-                            Block(true, true, i);
                         }
                     }
                     else
                     {
-                        //2 min powerplay
-                        var p = new Powerplay(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 60 / blocksPerMin), true, true);
-                        var pEnd = new Powerplay(p.Min + p.Length, p.Sec, false, true, p.Length);
-                        if (!(awayBlock[GetTime(p.Min, p.Sec)]))
+                        var l = GeneratePowerplayReport(i, false, awayBlock, 5, 5);
+                        if (l != null)
                         {
+                            list.Add(l);
                             away--;
-                            listStart.Add(p);
-                            listEnd.Add(pEnd);
-                            Block(true, true, i);
                         }
                     }
                 }
-                if (home + away == 0) break;
             }
 
-            return (listStart, listEnd);
+            return list;
         }
 
-        protected List<GameEvent> GenerateShots()
+        /// <summary>
+        /// Returns list of shots and goals based on given inputs.
+        /// </summary>
+        /// <param name="eventSection">Number of blocks in the period.</param>
+        /// <returns></returns>
+        protected List<GameEvent> GenerateShots(double hShots, double aShots, double hGoals, double aGoals, int eventSection, int blockOffset = 0)
         {
             var list = new List<GameEvent>();
 
-            //TODO:effects of powerplay on shots
-            double hShots = HomeShots;
-            double aShots = AwayShots;
-            double hGoals = HomeScore;
-            double aGoals = AwayScore;
-            for (int i = eventBlocks; i > 0; i--)
+            for (int i = eventSection; i > 0; i--)
             {
                 if (RandomGenerator.RandomBool((hShots + aShots) / i))
                 {
                     if (RandomGenerator.RandomBool(hShots / (hShots + aShots)))
                     {
                         //TODO:change shot on goal
-                        var s = new Shot(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 60 / blocksPerMin), true, false);
+                        var s = new Shot(
+                            TranslateEventBlocks(i + blockOffset).Item1, 
+                            TranslateEventBlocks(i + blockOffset).Item2 + RandomGenerator.RandomInInterval(0, 60 / sectionsPerMin), 
+                            true, false);
                         if (!(homeBlock[GetTime(s.Min, s.Sec)]))
                         {
                             list.Add(s);
-                            Block(true, true, i);
+                            Block(true, true, GetTime(s.Min, s.Sec));
 
                             //GOAL
                             if (RandomGenerator.RandomBool(hGoals / hShots))
@@ -190,11 +212,14 @@ namespace GameManagement.NHL
                     }
                     else
                     {
-                        var s = new Shot(TranslateEventBlocks(i).Item1, TranslateEventBlocks(i).Item2 + RandomGenerator.RandomInInterval(0, 60 / blocksPerMin), false, false);
+                        var s = new Shot(
+                            TranslateEventBlocks(i  + blockOffset).Item1, 
+                            TranslateEventBlocks(i + blockOffset).Item2 + RandomGenerator.RandomInInterval(0, 60 / sectionsPerMin), 
+                            false, false);
                         if (!(awayBlock[GetTime(s.Min, s.Sec)]))
                         {
                             list.Add(s);
-                            Block(true, true, i);
+                            Block(true, true, GetTime(s.Min, s.Sec));
 
                             //GOAL
                             if (RandomGenerator.RandomBool(aGoals / aShots))
@@ -214,12 +239,12 @@ namespace GameManagement.NHL
         }
 
         /// <summary>
-        /// Translates Event blocks to (minutes, seconds)
+        /// Translates Event blocks to (minutes, seconds) for inverted block index.
         /// </summary>
         /// <returns></returns>
         protected (int, int) TranslateEventBlocks(int block)
         {
-            int blocksPerMin = eventBlocks / Minutes;
+            int blocksPerMin = eventSection / Minutes;
             return (Minutes - (block - 1) / blocksPerMin - 1, (blocksPerMin - (block % blocksPerMin) - 1) * (60 / blocksPerMin));
         }
 

@@ -14,13 +14,15 @@ namespace GameManagement.NHL
             int homeScore, int awayScore, int homeShots, int awayShots, int homePowerplays, int awayPowerplays, ResultPeriod prevPeriod,
             OtType type
             ) : base(
-                homeScore, awayScore, homeShots, awayShots, homePowerplays, awayPowerplays, prevPeriod
+                homeScore, awayScore, homeShots, awayShots, homePowerplays, awayPowerplays, prevPeriod, PeriodType.Overtime, false
                 ) 
         {
             if (type == OtType.regular) Minutes = 5;
             else Minutes = 20;
 
             if (homeScore > 0 || awayScore > 0) GoalScored = true;
+
+            report = GenerateReport();
         }
 
         public enum OtType { regular, playoff }

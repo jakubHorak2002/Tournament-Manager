@@ -16,7 +16,17 @@ namespace GameManagement.NHL
         public int HomePowerplays { get; }
         public int AwayPowerplays { get; }
         public int AwayShots { get; }
-        public int Minutes { get; protected set; }
+        public int Minutes { 
+            get => minutes;
+            protected set 
+            {
+                minutes = value;
+                homeBlock = new bool[60 * Minutes];
+                awayBlock = new bool[60 * Minutes];
+            } 
+        }
+        private int minutes;
+        public PeriodType Type { get; }
         public ResultPeriod? PrevPeriod { get; }
 
         protected bool[] homeBlock;
@@ -25,9 +35,12 @@ namespace GameManagement.NHL
         public List<GameEvent> OverflowedEvents { get; } = new List<GameEvent>();
 
 
-        private List<GameEvent> report = new List<GameEvent>();
+        protected List<GameEvent> report = new List<GameEvent>();
 
-        public ResultPeriod(int homeScore, int awayScore, int homeShots, int awayShots, int homePowerplays, int awayPowerplays, ResultPeriod? prevPeriod) 
+        public ResultPeriod(
+            int homeScore, int awayScore, int homeShots, int awayShots, int homePowerplays, int awayPowerplays,
+            ResultPeriod? prevPeriod, PeriodType type, bool genReport = true
+            ) 
         { 
             HomeScore = homeScore;
             AwayScore = awayScore;
@@ -36,25 +49,35 @@ namespace GameManagement.NHL
             HomePowerplays = homePowerplays;
             AwayPowerplays = awayPowerplays;
             Minutes = 20;
-            homeBlock = new bool[60 * Minutes];
-            awayBlock = new bool[60 * Minutes];
             PrevPeriod = prevPeriod;
+            Type = type;
 
-            report = GenerateReport();
+            if (genReport) report = GenerateReport();
         }
 
-        protected virtual List<GameEvent> GenerateReport()
+        public virtual List<GameEvent> GenerateReport()
         {
-
             List<GameEvent> report = new List<GameEvent>();
+            report.Add(new PeriodMark(0, 0, true, Type));
 
             var goalReport = new List<GameEvent>();
             var shotReport = new List<GameEvent>();
             var powerplayReports = new List<List<GameEvent>>();
 
+            var allReports = new List<List<GameEvent>>();
+
+            if (PrevPeriod != null)
+            {
+                allReports.Add(PrevPeriod.OverflowedEvents);
+                foreach (var item in PrevPeriod.OverflowedEvents)
+                {
+                    //blocking based on overflowed events
+                    Block(true, true, GetTime(item.Min, item.Sec));
+                }
+            }
+
             //POWER PLAY
             powerplayReports = GeneratePowerplays();
-
             //POWER PLAY
 
             //SHOT
@@ -62,12 +85,9 @@ namespace GameManagement.NHL
             //SHOT
 
             //merge all reports chronologicaly
-            var allReports = new List<List<GameEvent>>() 
-            { 
-                shotReport
-            };
+            allReports.Add(shotReport);
             allReports.AddRange(powerplayReports);
-            if (PrevPeriod != null) allReports.Add(PrevPeriod.OverflowedEvents);
+            
 
             while (true)
             {
@@ -93,6 +113,8 @@ namespace GameManagement.NHL
                 report.RemoveAt(report.Count - 1);
             }
 
+            report.Add(new PeriodMark(0, 0, false, Type));
+
             return report;
         }
 
@@ -101,27 +123,70 @@ namespace GameManagement.NHL
         /// Generates full report for one powerplay.
         /// </summary>
         /// <returns>Returns list or null if powerplay can't be generated.</returns>
-        protected virtual List<GameEvent>? GeneratePowerplayReport(int min, int sec, bool home, bool[] blockArray, int hShots, int aShots)
+        protected virtual List<GameEvent>? GeneratePowerplayReport(
+            int min, int sec, bool home, bool[] blockArray, int hShots, int aShots
+            )
         {
+            //goal scored
+            int hGoals, aGoals;
+            if (home)
+            {
+                hGoals = PowerplayGoalsScored();
+                aGoals = ShorthandedGoalsScored();
+            }
+            else
+            {
+                aGoals = PowerplayGoalsScored();
+                hGoals = ShorthandedGoalsScored();
+            }
+
             var list = new List<GameEvent>();
 
-            var p = new Powerplay(min, sec, true, true);
-            var pEnd = new Powerplay(p.Min + p.Length, p.Sec, false, true, p.Length);
+            var p = new Powerplay(min, sec, true, home);
+            var pEnd = new Powerplay(p.Min + p.Length / 60, p.Sec, false, home, p.Length);
             if (GetTime(p.Min, p.Sec) >= blockArray.Length || !(blockArray[GetTime(p.Min, p.Sec)]))
             if (GetTime(p.Min, p.Sec) >= blockArray.Length || !(blockArray[GetTime(p.Min, p.Sec)]))
             {
                 //generating report
                 list.Add(p);
-                list.AddRange(GenerateShots(hShots, aShots, 0, 0, p.Length * 60, GetTime(p.Min, p.Sec), true));
+                list.AddRange(GenerateShots(hShots, aShots, hGoals, aGoals, p.Length, GetTime(p.Min, p.Sec), true));
+
+                //goal scored
+                if ((home && hGoals > 0) || (!home && aGoals > 0))
+                {
+                    int i = 0;
+                    foreach (var item in list)
+                    {
+                        i++;
+                        if (item is Goal)
+                        {
+                            break;
+                        }
+                    }
+                    list.RemoveRange(i, list.Count - i);
+                    if (list.Last() is Goal) pEnd = new Powerplay(list.Last().Min, list.Last().Sec, false, true, p.Length);
+                }
+                
+
                 list.Add(pEnd);
                 //full powerplay block
-                Block(true, true, GetTime(p.Min + (p.Length / 2), p.Sec - 30 * (p.Length % 2)), p.Length * 30 + 5);
+                Block(true, true, GetTime(p.Min, p.Sec) + pEnd.Length / 2, pEnd.Length / 2 + 5);
 
                 //TODO: powerplay overlapping + shot sometimes during powerplay bug
                 return list;
             }
 
             return null;
+        }
+
+        protected int PowerplayGoalsScored()
+        {
+            return 1;
+        }
+
+        protected int ShorthandedGoalsScored()
+        {
+            return 0;
         }
 
 
@@ -142,7 +207,9 @@ namespace GameManagement.NHL
                 {
                     if (home + away > 0 && RandomGenerator.RandomBool(home / (home + away)))
                     {
-                        var l = GeneratePowerplayReport(GetTime(Minutes * 60 - i).Item1, GetTime(Minutes * 60 - i).Item2, true, homeBlock, 5, 5);
+                        var l = GeneratePowerplayReport(
+                            GetTime(Minutes * 60 - i).Item1, GetTime(Minutes * 60 - i).Item2, true, homeBlock, 5, 5
+                            );
                         if (l != null)
                         {
                             list.Add(l);
@@ -190,7 +257,7 @@ namespace GameManagement.NHL
                             Block(true, true, GetTime(s.Min, s.Sec));
 
                             //GOAL
-                            if (hShots + aShots > 0 && RandomGenerator.RandomBool(hGoals / hShots))
+                            if (hShots > 0 && RandomGenerator.RandomBool(hGoals / hShots))
                             {
                                 hGoals--;
                                 list.Add(new Goal(s.Min, s.Sec, true, powerplay));
@@ -215,7 +282,6 @@ namespace GameManagement.NHL
                             }
 
                             aShots--;
-                            
                         }
                     }
                 }
@@ -280,5 +346,10 @@ namespace GameManagement.NHL
             return s;
         }
     }
-    
+
+    public enum PeriodType
+    {
+        Period1, Period2, Period3, Overtime, Shootout
+    }
+
 }

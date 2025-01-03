@@ -27,14 +27,23 @@ namespace GameManagement.NHL
         //TODO: generate overtime
         protected override void GenerateOvertime(ResultPeriod period3)
         {
+            //chance of shootout
             if (RandomGenerator.RandomBool(1))
             {
                 if (RandomGenerator.RandomBool(Home.OtWinRate / (Home.OtWinRate + Away.OtWinRate))) 
-                    ResultOvertime = new ResultOvertime(1, 0, 0, 0, 0, 0, Period3, ResultOvertime.OtType.regular);
-                else ResultOvertime = new ResultOvertime(0, 1, 0, 0, 0, 0, Period3, ResultOvertime.OtType.regular);
+                    ResultOvertime = new ResultOvertime(1, 0, 5, 5, 1, 0, Period3, ResultOvertime.OtType.regular);
+                else ResultOvertime = new ResultOvertime(0, 1, 5, 5, 1, 0, Period3, ResultOvertime.OtType.regular);
             }
         }
 
-         
+        public override string ToString()
+        {
+            var s = base.ToString();
+            if (ResultOvertime != null)
+            {
+                s += "\novertime:\n\n" + ResultOvertime.ToString();
+            }
+            return s;
+        }
     }
 }

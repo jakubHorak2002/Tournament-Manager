@@ -85,7 +85,11 @@ namespace GameManagement.NHL
         public bool Home { get; }
         public int Length { get; }
 
-        public Powerplay(int min, int sec, bool start, bool home, int length = 2) : base(min, sec, true)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="length">in seconds</param>
+        public Powerplay(int min, int sec, bool start, bool home, int length = 120) : base(min, sec, true)
         {
             Start = start;
             Home = home;
@@ -108,6 +112,23 @@ namespace GameManagement.NHL
         public Faceoff(int min, int sec, bool homeWin, bool powerplay) : base(min, sec, powerplay)
         {
             HomeWin = homeWin;
+        }
+    }
+
+    public class PeriodMark : GameEvent
+    {
+        public bool Start { get; }
+        public PeriodType Type { get; }
+        public PeriodMark(int min, int sec, bool start, PeriodType type) : base(min, sec, false)
+        {
+            Start = start;
+            Type = type;
+        }
+
+        public override string ToString()
+        {
+            if (Start) return $"{base.ToString()} {Type.ToString()} Start";
+            return $"{base.ToString()} {Type.ToString()} End";
         }
     }
 }

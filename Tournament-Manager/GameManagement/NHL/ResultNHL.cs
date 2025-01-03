@@ -36,10 +36,16 @@ namespace GameManagement.NHL
             (int[] homePowerplays, int[] awayPowerplays) = AssignToPeriod(4, 4);
 
             //TODO: change period1
-            Period1 = new ResultPeriod(homeGoals[0], awayGoals[0], homeShots[0], awayShots[0], homePowerplays[0], awayPowerplays[0], null);
+            Period1 = new ResultPeriod(
+                homeGoals[0], awayGoals[0], homeShots[0], awayShots[0], homePowerplays[0], awayPowerplays[0], null, PeriodType.Period1
+                );
             //Period1 = new ResultPeriod(homeGoals[0], awayGoals[0], homeShots[0], awayShots[0], 4, 4, null);
-            Period2 = new ResultPeriod(homeGoals[1], awayGoals[1], homeShots[1], awayShots[1], homePowerplays[1], awayPowerplays[1], Period1);
-            Period3 = new ResultPeriod(homeGoals[2], awayGoals[2], homeShots[2], awayShots[2], homePowerplays[2], awayPowerplays[2], Period2);
+            Period2 = new ResultPeriod(
+                homeGoals[1], awayGoals[1], homeShots[1], awayShots[1], homePowerplays[1], awayPowerplays[1], Period1, PeriodType.Period2
+                );
+            Period3 = new ResultPeriod(
+                homeGoals[2], awayGoals[2], homeShots[2], awayShots[2], homePowerplays[2], awayPowerplays[2], Period2, PeriodType.Period3
+                );
 
             if (HomeScore == AwayScore) 
             {

@@ -4,8 +4,8 @@ using GameManagement.ResultGeneration;
 using TournamentManagement.Data;
 using TournamentManagement.NHL;
 
-TeamNHL home = new TeamNHL("Dalas Stars", "Stars", "Sta", 0.8, 1, 3, 1, 0, 0, 0);
-TeamNHL away = new TeamNHL("Boston Bruins", "Bruins", "Bru", 0.6, 1, 3, 0, 1, 0, 0);
+TeamNHL home = new TeamNHL("Dalas Stars", "Stars", "Sta", 0.8, 1, 3, 1, 0, 0, 30);
+TeamNHL away = new TeamNHL("Boston Bruins", "Bruins", "Bru", 0.6, 1, 3, 0, 1, 0, 30);
 
 for (int i = 0; i < 1; i++)
 {

@@ -33,7 +33,7 @@ namespace GameManagement.NHL
             (int[] homeShots, int[] awayShots) = AssignToPeriod(HomeShots, AwayShots);
             //TODO: change amount of powerplays
             //powerplay
-            (int[] homePowerplays, int[] awayPowerplays) = AssignToPeriod(1, 1);
+            (int[] homePowerplays, int[] awayPowerplays) = AssignToPeriod(4, 4);
 
             //TODO: change period1
             Period1 = new ResultPeriod(homeGoals[0], awayGoals[0], homeShots[0], awayShots[0], homePowerplays[0], awayPowerplays[0], null);
